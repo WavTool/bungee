@@ -16,8 +16,10 @@ Eigen::ArrayXf fromFrequencyDomainCoefficients(int log2Size, float gain, std::in
 	Eigen::ArrayXcf frequencyDomain(Fourier::binCount(log2Size));
 
 	std::size_t i = 0;
-	for (auto c : coefficients)
+	for (auto c : coefficients) {
 		frequencyDomain.coeffRef(i++) = c * gain;
+		if(i >= frequencyDomain.rows()) break;
+	}
 
 	frequencyDomain.bottomRows(frequencyDomain.rows() - i).setZero();
 
